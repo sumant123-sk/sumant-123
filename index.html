@@ -4,10 +4,341 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Witness the Darkness</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: #000;
+            color: #333;
+        }
+
+        /* Intro Screen Styles */
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            overflow: hidden;
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, transparent 100%);
+            animation: darknessConsume 4s ease-in-out forwards;
+            z-index: 2;
+        }
+
+        .particles {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: 3;
+            background: radial-gradient(circle, #000000 0%, transparent 60%);
+            animation: waveSpread 3s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        .intro-content {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            animation: textAppear 2s ease-out forwards;
+            animation-delay: 3s;
+        }
+
+        .glowing-text {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow:
+                0 0 20px rgba(255, 255, 255, 0.9),
+                0 0 40px rgba(255, 255, 255, 0.6),
+                0 0 60px rgba(255, 255, 255, 0.3);
+            animation: dramaticGlow 3s ease-in-out infinite alternate;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .light-burst {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            box-shadow: 0 0 50px 50px rgba(255, 255, 255, 0.5);
+            animation: lightBurst 2s ease-in-out forwards;
+            animation-delay: 1.5s;
+            opacity: 0;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            min-height: 100vh;
+            background: #ffffff;
+            color: #333;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease-out;
+            padding: 2rem 0;
+        }
+        .main-content.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hidden {
+            display: none;
+        }
+
+        .terms-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            animation: contentSlideIn 1s ease-out forwards;
+            background: #ffffff;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        /* Terms and Policy Styling */
+        .terms-header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 3rem;
+        }
+        .terms-header h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1rem;
+            color: #333;
+            font-weight: bold;
+        }
+        .terms-subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: #666;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        .last-updated {
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .terms-section {
+            margin-bottom: 3rem;
+        }
+        .section-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+        .terms-content {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+        .terms-list {
+            list-style-type: decimal;
+            padding-left: 2rem;
+            margin: 1.5rem 0;
+        }
+        .terms-list li {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        .subsection {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            border-radius: 5px;
+        }
+        .subsection-title {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        .highlight-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .highlight-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 0.5rem;
+        }
+        .contact-info {
+            background: #e9ecef;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        .restart-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #333, #555);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 2rem;
+            cursor: pointer;
+            border: none;
+        }
+        .restart-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #555, #333);
+        }
+
+        /* Animations */
+        @keyframes darknessConsume {
+            0% {
+                background: radial-gradient(circle at center, transparent 0%, transparent 100%);
+            }
+            50% {
+                background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0.8) 80%);
+            }
+            100% {
+                background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 0%, #000000 70%);
+            }
+        }
+        @keyframes waveSpread {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0.8;
+            }
+            70% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0;
+            }
+        }
+        @keyframes textAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            70% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes dramaticGlow {
+            0% {
+                text-shadow:
+                    0 0 20px rgba(255, 255, 255, 0.9),
+                    0 0 40px rgba(255, 255, 255, 0.6),
+                    0 0 60px rgba(255, 255, 255, 0.3);
+            }
+            100% {
+                text-shadow:
+                    0 0 30px rgba(255, 255, 255, 1),
+                    0 0 60px rgba(255, 255, 255, 0.8),
+                    0 0 90px rgba(255, 255, 255, 0.5);
+            }
+        }
+        @keyframes lightBurst {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
+            50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.5); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(2); }
+        }
+        @keyframes contentSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .terms-container {
+                padding: 1rem;
+                margin: 1rem;
+            }
+            .terms-header {
+                padding: 2rem 1rem;
+            }
+            .terms-header h1 {
+                font-size: 2.5rem;
+            }
+            .glowing-text {
+                font-size: 2.5rem;
+                letter-spacing: 2px;
+            }
+            .subsection {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+            .terms-list {
+                padding-left: 1.5rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .glowing-text {
+                font-size: 2rem;
+                letter-spacing: 1px;
+            }
+            .terms-header h1 {
+                font-size: 2rem;
+            }
+            .terms-container {
+                padding: 0.5rem;
+                margin: 0.5rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .subsection-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Cinematic Intro Screen -->
     <div id="intro-screen" class="intro-screen">
         <div class="background-overlay"></div>
         <div class="particles"></div>
@@ -16,12 +347,224 @@
             <div class="light-burst"></div>
         </div>
     </div>
-
-    <!-- Main Content Container (Initially Hidden) -->
     <div id="main-content" class="main-content hidden">
-        <!-- Content from hi.html will be loaded here -->
-    </div>
+        </div>
 
-    <script src="script.js"></script>
+    <script>
+        // In-line HTML content for the main page
+        const externalContent = `
+            <div class="terms-container">
+                <header class="terms-header">
+                    <h1>Terms of Service & Privacy Policy</h1>
+                    <p class="terms-subtitle">The Darkness Has Rules</p>
+                    <p class="last-updated">Last Updated: August 6, 2025</p>
+                </header>
+
+                <main class="terms-main">
+                    <section class="terms-section">
+                        <h2 class="section-title">1. Terms of Service</h2>
+                        <div class="terms-content">
+                            <p>Welcome to our cinematic digital experience. By entering this realm where darkness consumes light, you agree to be bound by the following terms and conditions.</p>
+                            <div class="subsection">
+                                <h3 class="subsection-title">Acceptance of Terms</h3>
+                                <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
+                            </div>
+                            <ol class="terms-list">
+                                <li><strong>Use License:</strong> Permission is granted to temporarily download one copy of the materials for personal, non-commercial transitory viewing only.</li>
+                                <li><strong>Restrictions:</strong> You may not modify or copy the materials, use the materials for any commercial purpose, or attempt to decompile or reverse engineer any software.</li>
+                                <li><strong>Content Accuracy:</strong> The materials on this website may include technical, typographical, or photographic errors. We do not warrant that any of the materials are accurate, complete, or current.</li>
+                                <li><strong>Modifications:</strong> We may revise these terms of service at any time without notice. By using this site, you agree to be bound by the current version of these terms.</li>
+                            </ol>
+                        </div>
+                    </section>
+
+                    <section class="terms-section">
+                        <h2 class="section-title">2. Privacy Policy</h2>
+                        <div class="terms-content">
+                            <p>Your privacy is important to us. This privacy policy explains what personal data we collect and how we use it.</p>
+                            <div class="subsection">
+                                <h3 class="subsection-title">Information We Collect</h3>
+                                <p>We may collect information about your visit, including the pages you view, the links you click, and other actions you take in connection with our site.</p>
+                            </div>
+                            <div class="subsection">
+                                <h3 class="subsection-title">How We Use Information</h3>
+                                <p>We use the information we collect to provide, maintain, protect, and improve our services, develop new ones, and protect our users.</p>
+                            </div>
+                            <div class="highlight-box">
+                                <div class="highlight-title">Important Notice</div>
+                                <p>This cinematic experience uses only essential cookies for functionality. No personal data is stored or transmitted to third parties.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="terms-section">
+                        <h2 class="section-title">3. Cookie Policy</h2>
+                        <div class="terms-content">
+                            <p>This website uses cookies to enhance your Browse experience and provide personalized content.</p>
+                            <ol class="terms-list">
+                                <li><strong>Essential Cookies:</strong> These are necessary for the website to function and cannot be switched off.</li>
+                                <li><strong>Performance Cookies:</strong> These help us understand how visitors interact with our website.</li>
+                                <li><strong>Functional Cookies:</strong> These enable enhanced functionality and personalization.</li>
+                            </ol>
+                        </div>
+                    </section>
+
+                    <section class="terms-section">
+                        <h2 class="section-title">4. Limitation of Liability</h2>
+                        <div class="terms-content">
+                            <p>In no event shall our company or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on this website.</p>
+                            <div class="subsection">
+                                <h3 class="subsection-title">Governing Law</h3>
+                                <p>These terms and conditions are governed by and construed in accordance with the laws and any disputes relating to these terms will be subject to the exclusive jurisdiction of the courts.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="terms-section">
+                        <h2 class="section-title">5. Contact Information</h2>
+                        <div class="contact-info">
+                            <p>If you have any questions about these Terms of Service or Privacy Policy, please contact us.</p>
+                            <p><strong>Email:</strong> legal@darknessconsumes.com</p>
+                            <p><strong>Address:</strong> 123 Shadow Lane, Dark City, DC 12345</p>
+                            <button class="restart-button" onclick="restartExperience()">Experience the Darkness Again</button>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        `;
+
+        class CinematicExperience {
+            constructor() {
+                this.introScreen = document.getElementById('intro-screen');
+                this.mainContent = document.getElementById('main-content');
+                this.isIntroComplete = false;
+
+                this.init();
+            }
+
+            init() {
+                this.startIntroSequence();
+                this.setupEventListeners();
+                this.loadMainContent(externalContent); // Load content immediately
+            }
+
+            startIntroSequence() {
+                this.introScreen.style.display = 'flex';
+                this.mainContent.classList.add('hidden');
+                setTimeout(() => {
+                    this.transitionToMainContent();
+                }, 6000); // 6 seconds total intro time
+            }
+
+            transitionToMainContent() {
+                if (this.isIntroComplete) return;
+
+                this.isIntroComplete = true;
+
+                this.introScreen.style.opacity = '0';
+                this.introScreen.style.transform = 'scale(1.1)';
+
+                setTimeout(() => {
+                    this.introScreen.style.display = 'none';
+                    this.showMainContent();
+                }, 1000);
+            }
+
+            loadMainContent(content) {
+                this.mainContent.innerHTML = content;
+            }
+
+            showMainContent() {
+                this.mainContent.classList.remove('hidden');
+                setTimeout(() => {
+                    this.mainContent.classList.add('show');
+                }, 100);
+                this.animateContentElements();
+            }
+
+            animateContentElements() {
+                const cards = document.querySelectorAll('.terms-section, .contact-info');
+                const header = document.querySelector('.terms-header');
+
+                if (header) {
+                    header.style.opacity = '0';
+                    header.style.transform = 'translateY(-30px)';
+                    setTimeout(() => {
+                        header.style.transition = 'all 0.8s ease-out';
+                        header.style.opacity = '1';
+                        header.style.transform = 'translateY(0)';
+                    }, 200);
+                }
+
+                cards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(50px)';
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.8s ease-out';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 400 + (index * 200));
+                });
+            }
+
+            setupEventListeners() {
+                window.addEventListener('resize', this.handleResize.bind(this));
+                document.addEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
+                setTimeout(() => {
+                    this.introScreen.addEventListener('click', () => {
+                        if (!this.isIntroComplete) {
+                            this.transitionToMainContent();
+                        }
+                    });
+                }, 2000);
+            }
+
+            handleResize() {
+                if (this.isIntroComplete) {
+                    this.updateContentLayout();
+                }
+            }
+
+            handleVisibilityChange() {
+                if (document.hidden) {
+                    document.body.style.animationPlayState = 'paused';
+                } else {
+                    document.body.style.animationPlayState = 'running';
+                }
+            }
+
+            updateContentLayout() {
+                const wrapper = document.querySelector('.terms-container');
+                if (wrapper) {
+                    wrapper.style.opacity = '0.99';
+                    setTimeout(() => {
+                        wrapper.style.opacity = '1';
+                    }, 10);
+                }
+            }
+
+            restart() {
+                this.isIntroComplete = false;
+                this.mainContent.classList.remove('show');
+                this.mainContent.classList.add('hidden');
+                this.introScreen.style.display = 'flex';
+                this.introScreen.style.opacity = '1';
+                this.introScreen.style.transform = 'scale(1)';
+                setTimeout(() => {
+                    this.startIntroSequence();
+                }, 100);
+            }
+        }
+
+        function restartExperience() {
+            if (window.cinematicExperience) {
+                window.cinematicExperience.restart();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            window.cinematicExperience = new CinematicExperience();
+        });
+    </script>
 </body>
 </html>
