@@ -154,30 +154,30 @@
             border-bottom: 2px solid #eee;
             margin-bottom: 3rem;
         }
-        
+
         .terms-header h1 {
             font-size: clamp(2.5rem, 6vw, 4rem);
             margin-bottom: 1rem;
             color: #333;
             font-weight: bold;
         }
-        
+
         .terms-subtitle {
             font-size: clamp(1rem, 3vw, 1.5rem);
             color: #666;
             font-style: italic;
             margin-bottom: 1rem;
         }
-        
+
         .last-updated {
             font-size: 0.9rem;
             color: #888;
         }
-        
+
         .terms-section {
             margin-bottom: 3rem;
         }
-        
+
         .section-title {
             font-size: 1.8rem;
             color: #333;
@@ -185,24 +185,24 @@
             padding-bottom: 0.5rem;
             border-bottom: 1px solid #ddd;
         }
-        
+
         .terms-content {
             line-height: 1.8;
             color: #555;
             margin-bottom: 2rem;
         }
-        
+
         .terms-list {
             list-style-type: decimal;
             padding-left: 2rem;
             margin: 1.5rem 0;
         }
-        
+
         .terms-list li {
             margin-bottom: 1rem;
             line-height: 1.7;
         }
-        
+
         .subsection {
             margin: 2rem 0;
             padding: 1.5rem;
@@ -210,14 +210,14 @@
             border-left: 4px solid #007bff;
             border-radius: 5px;
         }
-        
+
         .subsection-title {
             font-size: 1.3rem;
             color: #333;
             margin-bottom: 1rem;
             font-weight: bold;
         }
-        
+
         .highlight-box {
             background: #fff3cd;
             border: 1px solid #ffeaa7;
@@ -225,13 +225,13 @@
             padding: 1.5rem;
             margin: 2rem 0;
         }
-        
+
         .highlight-title {
             font-weight: bold;
             color: #856404;
             margin-bottom: 0.5rem;
         }
-        
+
         .contact-info {
             background: #e9ecef;
             padding: 2rem;
@@ -239,10 +239,10 @@
             text-align: center;
             margin-top: 3rem;
         }
-        
-        .restart-button {
+
+        .agree-button {
             display: inline-block;
-            background: linear-gradient(45deg, #333, #555);
+            background: #28a745;
             color: white;
             text-decoration: none;
             padding: 1rem 2rem;
@@ -255,11 +255,11 @@
             cursor: pointer;
             border: none;
         }
-        
-        .restart-button:hover {
+
+        .agree-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(45deg, #555, #333);
+            background: #218838;
         }
 
         /* Animations */
@@ -330,7 +330,7 @@
                 transform: translateY(-5px);
             }
         }
-        
+
         @keyframes contentSlideIn {
             0% {
                 opacity: 0;
@@ -421,9 +421,9 @@
         </div>
     </div>
     <div id="main-content" class="main-content hidden">
-        </div>
+    </div>
     <script>
-        // In-line HTML content for the terms and policy page (replaces terms.html)
+        // In-line HTML content for the terms and policy page
         const termsContent = `
             <div class="terms-container">
                 <header class="terms-header">
@@ -435,15 +435,10 @@
                     <section class="terms-section">
                         <h2 class="section-title">1. Terms of Service</h2>
                         <div class="terms-content">
-                            <p>Welcome to our cinematic digital experience. By entering this realm where darkness consumes light, you agree to be bound by the following terms and conditions.</p>
-                            <div class="subsection">
-                                <h3 class="subsection-title">Acceptance of Terms</h3>
-                                <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
-                            </div>
+                            <p>Welcome to our digital experience. By entering this realm where darkness consumes light, you agree to be bound by the following terms and conditions.</p>
                             <ol class="terms-list">
                                 <li><strong>Use License:</strong> Permission is granted to temporarily download one copy of the materials for personal, non-commercial transitory viewing only.</li>
                                 <li><strong>Restrictions:</strong> You may not modify or copy the materials, use the materials for any commercial purpose, or attempt to decompile or reverse engineer any software.</li>
-                                <li><strong>Content Accuracy:</strong> The materials on this website may include technical, typographical, or photographic errors. We do not warrant that any of the materials are accurate, complete, or current.</li>
                                 <li><strong>Modifications:</strong> We may revise these terms of service at any time without notice. By using this site, you agree to be bound by the current version of these terms.</li>
                             </ol>
                         </div>
@@ -452,14 +447,6 @@
                         <h2 class="section-title">2. Privacy Policy</h2>
                         <div class="terms-content">
                             <p>Your privacy is important to us. This privacy policy explains what personal data we collect and how we use it.</p>
-                            <div class="subsection">
-                                <h3 class="subsection-title">Information We Collect</h3>
-                                <p>We may collect information about your visit, including the pages you view, the links you click, and other actions you take in connection with our site.</p>
-                            </div>
-                            <div class="subsection">
-                                <h3 class="subsection-title">How We Use Information</h3>
-                                <p>We use the information we collect to provide, maintain, protect, and improve our services, develop new ones, and protect our users.</p>
-                            </div>
                             <div class="highlight-box">
                                 <div class="highlight-title">Important Notice</div>
                                 <p>This cinematic experience uses only essential cookies for functionality. No personal data is stored or transmitted to third parties.</p>
@@ -467,33 +454,18 @@
                         </div>
                     </section>
                     <section class="terms-section">
-                        <h2 class="section-title">3. Cookie Policy</h2>
+                        <h2 class="section-title">3. Limitation of Liability</h2>
                         <div class="terms-content">
-                            <p>This website uses cookies to enhance your Browse experience and provide personalized content.</p>
-                            <ol class="terms-list">
-                                <li><strong>Essential Cookies:</strong> These are necessary for the website to function and cannot be switched off.</li>
-                                <li><strong>Performance Cookies:</strong> These help us understand how visitors interact with our website.</li>
-                                <li><strong>Functional Cookies:</strong> These enable enhanced functionality and personalization.</li>
-                            </ol>
+                            <p>In no event shall our company be liable for any damages arising out of the use or inability to use the materials on this website.</p>
                         </div>
                     </section>
                     <section class="terms-section">
-                        <h2 class="section-title">4. Limitation of Liability</h2>
-                        <div class="terms-content">
-                            <p>In no event shall our company or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on this website.</p>
-                            <div class="subsection">
-                                <h3 class="subsection-title">Governing Law</h3>
-                                <p>These terms and conditions are governed by and construed in accordance with the laws and any disputes relating to these terms will be subject to the exclusive jurisdiction of the courts.</p>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="terms-section">
-                        <h2 class="section-title">5. Contact Information</h2>
+                        <h2 class="section-title">4. Contact Information</h2>
                         <div class="contact-info">
                             <p>If you have any questions about these Terms of Service or Privacy Policy, please contact us.</p>
                             <p><strong>Email:</strong> legal@darknessconsumes.com</p>
                             <p><strong>Address:</strong> 123 Shadow Lane, Dark City, DC 12345</p>
-                            <button class="restart-button" onclick="restartExperience()">Experience the Darkness Again</button>
+                            <button class="agree-button" onclick="loadHiContent()">Agree & Continue</button>
                         </div>
                     </section>
                 </main>
@@ -537,7 +509,7 @@
                 this.mainContent = document.getElementById('main-content');
                 this.isIntroComplete = false;
                 this.termsLoaded = false;
-                
+
                 this.init();
             }
 
@@ -663,12 +635,12 @@
                 this.introScreen.style.opacity = '1';
                 this.introScreen.style.transform = 'scale(1)';
                 this.introScreen.style.visibility = 'visible';
-                
+
                 this.introScreen.style.animation = 'none';
                 setTimeout(() => {
                     this.introScreen.style.animation = 'completeIntro 7s ease-in-out forwards';
                 }, 10);
-                
+
                 setTimeout(() => {
                     this.startDarknessSequence();
                 }, 100);
@@ -699,7 +671,7 @@
             });
         }
         setTimeout(optimizeAnimations, 1000);
-        
+
         window.addEventListener('error', (event) => {
             console.error('Application error:', event.error);
         });
