@@ -11,6 +11,7 @@
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
@@ -32,19 +33,31 @@
             z-index: 9999;
             overflow: hidden;
             transition: opacity 1s ease-out, transform 1s ease-out;
+            animation: completeIntro 7s ease-in-out forwards;
         }
-        .background-overlay {
+
+        .white-base {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at center, transparent 0%, transparent 100%);
+            background: linear-gradient(45deg, #ffffff 0%, #f8f9fa 25%, #ffffff 50%, #f0f0f0 100%);
+            z-index: 1;
+        }
+
+        .darkness-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, #000000 70%);
             animation: darknessConsume 4s ease-in-out forwards;
             z-index: 2;
         }
 
-        .particles {
+        .darkness-wave {
             position: absolute;
             width: 200%;
             height: 200%;
@@ -53,9 +66,24 @@
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
             z-index: 3;
+        }
+
+        .wave-1 {
             background: radial-gradient(circle, #000000 0%, transparent 60%);
             animation: waveSpread 3s ease-out forwards;
             animation-delay: 0.5s;
+        }
+
+        .wave-2 {
+            background: radial-gradient(circle, #1a1a1a 0%, transparent 40%);
+            animation: waveSpread 2.5s ease-out forwards;
+            animation-delay: 1.2s;
+        }
+
+        .wave-3 {
+            background: radial-gradient(circle, #000000 0%, transparent 30%);
+            animation: waveSpread 2s ease-out forwards;
+            animation-delay: 2s;
         }
 
         .intro-content {
@@ -67,7 +95,7 @@
             animation-delay: 3s;
         }
 
-        .glowing-text {
+        .dramatic-text {
             font-size: clamp(2.5rem, 8vw, 6rem);
             font-weight: bold;
             color: #ffffff;
@@ -81,18 +109,12 @@
             text-transform: uppercase;
         }
 
-        .light-burst {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            box-shadow: 0 0 50px 50px rgba(255, 255, 255, 0.5);
-            animation: lightBurst 2s ease-in-out forwards;
-            animation-delay: 1.5s;
-            opacity: 0;
+        .subtitle-text {
+            font-size: clamp(1rem, 3vw, 2rem);
+            color: rgba(255, 255, 255, 0.8);
+            font-style: italic;
+            letter-spacing: 2px;
+            animation: subtitlePulse 2s ease-in-out infinite;
         }
 
         /* Main Content Styles */
@@ -105,14 +127,17 @@
             transition: all 1s ease-out;
             padding: 2rem 0;
         }
+
         .main-content.show {
             opacity: 1;
             transform: translateY(0);
         }
+
         .hidden {
             display: none;
         }
 
+        /* Terms and Policy Styling */
         .terms-container {
             max-width: 1000px;
             margin: 0 auto;
@@ -123,32 +148,36 @@
             border-radius: 10px;
         }
 
-        /* Terms and Policy Styling */
         .terms-header {
             text-align: center;
             padding: 3rem 0;
             border-bottom: 2px solid #eee;
             margin-bottom: 3rem;
         }
+        
         .terms-header h1 {
             font-size: clamp(2.5rem, 6vw, 4rem);
             margin-bottom: 1rem;
             color: #333;
             font-weight: bold;
         }
+        
         .terms-subtitle {
             font-size: clamp(1rem, 3vw, 1.5rem);
             color: #666;
             font-style: italic;
             margin-bottom: 1rem;
         }
+        
         .last-updated {
             font-size: 0.9rem;
             color: #888;
         }
+        
         .terms-section {
             margin-bottom: 3rem;
         }
+        
         .section-title {
             font-size: 1.8rem;
             color: #333;
@@ -156,20 +185,24 @@
             padding-bottom: 0.5rem;
             border-bottom: 1px solid #ddd;
         }
+        
         .terms-content {
             line-height: 1.8;
             color: #555;
             margin-bottom: 2rem;
         }
+        
         .terms-list {
             list-style-type: decimal;
             padding-left: 2rem;
             margin: 1.5rem 0;
         }
+        
         .terms-list li {
             margin-bottom: 1rem;
             line-height: 1.7;
         }
+        
         .subsection {
             margin: 2rem 0;
             padding: 1.5rem;
@@ -177,12 +210,14 @@
             border-left: 4px solid #007bff;
             border-radius: 5px;
         }
+        
         .subsection-title {
             font-size: 1.3rem;
             color: #333;
             margin-bottom: 1rem;
             font-weight: bold;
         }
+        
         .highlight-box {
             background: #fff3cd;
             border: 1px solid #ffeaa7;
@@ -190,11 +225,13 @@
             padding: 1.5rem;
             margin: 2rem 0;
         }
+        
         .highlight-title {
             font-weight: bold;
             color: #856404;
             margin-bottom: 0.5rem;
         }
+        
         .contact-info {
             background: #e9ecef;
             padding: 2rem;
@@ -202,6 +239,7 @@
             text-align: center;
             margin-top: 3rem;
         }
+        
         .restart-button {
             display: inline-block;
             background: linear-gradient(45deg, #333, #555);
@@ -217,6 +255,7 @@
             cursor: pointer;
             border: none;
         }
+        
         .restart-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
@@ -235,6 +274,7 @@
                 background: radial-gradient(circle at center, rgba(0, 0, 0, 0.1) 0%, #000000 70%);
             }
         }
+
         @keyframes waveSpread {
             0% {
                 transform: translate(-50%, -50%) scale(0);
@@ -249,6 +289,7 @@
                 opacity: 0;
             }
         }
+
         @keyframes textAppear {
             0% {
                 opacity: 0;
@@ -263,6 +304,7 @@
                 transform: scale(1);
             }
         }
+
         @keyframes dramaticGlow {
             0% {
                 text-shadow:
@@ -277,11 +319,18 @@
                     0 0 90px rgba(255, 255, 255, 0.5);
             }
         }
-        @keyframes lightBurst {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0); }
-            50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.5); }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(2); }
+
+        @keyframes subtitlePulse {
+            0%, 100% {
+                opacity: 0.8;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-5px);
+            }
         }
+        
         @keyframes contentSlideIn {
             0% {
                 opacity: 0;
@@ -290,6 +339,20 @@
             100% {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        /* Intro Screen Animation Sequence */
+        @keyframes completeIntro {
+            0% {
+                opacity: 1;
+            }
+            85% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
             }
         }
 
@@ -305,9 +368,12 @@
             .terms-header h1 {
                 font-size: 2.5rem;
             }
-            .glowing-text {
+            .dramatic-text {
                 font-size: 2.5rem;
                 letter-spacing: 2px;
+            }
+            .subtitle-text {
+                font-size: 1.2rem;
             }
             .subsection {
                 padding: 1rem;
@@ -317,9 +383,14 @@
                 padding-left: 1.5rem;
             }
         }
+
         @media (max-width: 480px) {
-            .glowing-text {
+            .dramatic-text {
                 font-size: 2rem;
+                letter-spacing: 1px;
+            }
+            .subtitle-text {
+                font-size: 1rem;
                 letter-spacing: 1px;
             }
             .terms-header h1 {
@@ -341,25 +412,25 @@
 <body>
     <div id="intro-screen" class="intro-screen">
         <div class="background-overlay"></div>
-        <div class="particles"></div>
+        <div class="darkness-wave wave-1"></div>
+        <div class="darkness-wave wave-2"></div>
+        <div class="darkness-wave wave-3"></div>
         <div class="intro-content">
-            <h1 class="glowing-text">Witness the Darkness</h1>
-            <div class="light-burst"></div>
+            <h1 class="dramatic-text">Witness the Darkness</h1>
+            <p class="subtitle-text">The darkness has come for the light</p>
         </div>
     </div>
     <div id="main-content" class="main-content hidden">
         </div>
-
     <script>
-        // In-line HTML content for the main page
-        const externalContent = `
+        // In-line HTML content for the terms and policy page (replaces terms.html)
+        const termsContent = `
             <div class="terms-container">
                 <header class="terms-header">
                     <h1>Terms of Service & Privacy Policy</h1>
                     <p class="terms-subtitle">The Darkness Has Rules</p>
                     <p class="last-updated">Last Updated: August 6, 2025</p>
                 </header>
-
                 <main class="terms-main">
                     <section class="terms-section">
                         <h2 class="section-title">1. Terms of Service</h2>
@@ -377,7 +448,6 @@
                             </ol>
                         </div>
                     </section>
-
                     <section class="terms-section">
                         <h2 class="section-title">2. Privacy Policy</h2>
                         <div class="terms-content">
@@ -396,7 +466,6 @@
                             </div>
                         </div>
                     </section>
-
                     <section class="terms-section">
                         <h2 class="section-title">3. Cookie Policy</h2>
                         <div class="terms-content">
@@ -408,7 +477,6 @@
                             </ol>
                         </div>
                     </section>
-
                     <section class="terms-section">
                         <h2 class="section-title">4. Limitation of Liability</h2>
                         <div class="terms-content">
@@ -419,7 +487,6 @@
                             </div>
                         </div>
                     </section>
-
                     <section class="terms-section">
                         <h2 class="section-title">5. Contact Information</h2>
                         <div class="contact-info">
@@ -433,27 +500,64 @@
             </div>
         `;
 
-        class CinematicExperience {
+        const hiContent = `
+            <div class="main-content content-wrapper">
+                <header class="main-header">
+                    <h1>Welcome</h1>
+                    <p class="subtitle">The darkness has embraced you.</p>
+                </header>
+                <main class="main-section">
+                    <div class="card-container">
+                        <div class="content-card">
+                            <h2>The First Embrace</h2>
+                            <p>You have stepped into the void. This is just the beginning of your journey. Proceed with caution.</p>
+                            <ul class="feature-list">
+                                <li class="feature-item"><span class="feature-icon">✨</span> A new reality awaits.</li>
+                                <li class="feature-item"><span class="feature-icon">🌌</span> Infinite possibilities in the darkness.</li>
+                                <li class="feature-item"><span class="feature-icon">🕳️</span> A path with no end.</li>
+                            </ul>
+                        </div>
+                        <div class="content-card">
+                            <h2>The Rules of the Void</h2>
+                            <p>In this space, time is a suggestion and logic is a whisper. The only true rule is to witness the darkness and let it witness you.</p>
+                            <button class="cta-button">Explore the Abyss</button>
+                        </div>
+                    </div>
+                </main>
+                <footer class="main-footer">
+                    <p>&copy; 2025 The Darkness. All rights reserved.</p>
+                </footer>
+            </div>
+        `;
+
+        // Darkness Consumes Light Experience Controller
+        class DarknessExperience {
             constructor() {
                 this.introScreen = document.getElementById('intro-screen');
                 this.mainContent = document.getElementById('main-content');
                 this.isIntroComplete = false;
-
+                this.termsLoaded = false;
+                
                 this.init();
             }
 
             init() {
-                this.startIntroSequence();
+                this.startDarknessSequence();
+                this.preloadContent();
                 this.setupEventListeners();
-                this.loadMainContent(externalContent); // Load content immediately
             }
 
-            startIntroSequence() {
+            startDarknessSequence() {
                 this.introScreen.style.display = 'flex';
                 this.mainContent.classList.add('hidden');
                 setTimeout(() => {
                     this.transitionToMainContent();
-                }, 6000); // 6 seconds total intro time
+                }, 7000);
+            }
+
+            preloadContent() {
+                this.termsContent = termsContent;
+                this.hiContent = hiContent;
             }
 
             transitionToMainContent() {
@@ -466,15 +570,22 @@
 
                 setTimeout(() => {
                     this.introScreen.style.display = 'none';
-                    this.showMainContent();
+                    this.loadTermsContent();
                 }, 1000);
             }
 
-            loadMainContent(content) {
-                this.mainContent.innerHTML = content;
+            loadTermsContent() {
+                this.mainContent.innerHTML = this.termsContent;
+                this.mainContent.classList.remove('hidden');
+                setTimeout(() => {
+                    this.mainContent.classList.add('show');
+                }, 100);
+                this.animateContentElements();
+                this.termsLoaded = true;
             }
 
-            showMainContent() {
+            loadHiContent() {
+                this.mainContent.innerHTML = this.hiContent;
                 this.mainContent.classList.remove('hidden');
                 setTimeout(() => {
                     this.mainContent.classList.add('show');
@@ -483,8 +594,8 @@
             }
 
             animateContentElements() {
-                const cards = document.querySelectorAll('.terms-section, .contact-info');
-                const header = document.querySelector('.terms-header');
+                const elements = this.termsLoaded ? document.querySelectorAll('.terms-section, .contact-info') : document.querySelectorAll('.content-card');
+                const header = this.termsLoaded ? document.querySelector('.terms-header') : document.querySelector('.main-header');
 
                 if (header) {
                     header.style.opacity = '0';
@@ -496,13 +607,13 @@
                     }, 200);
                 }
 
-                cards.forEach((card, index) => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(50px)';
+                elements.forEach((element, index) => {
+                    element.style.opacity = '0';
+                    element.style.transform = 'translateY(50px)';
                     setTimeout(() => {
-                        card.style.transition = 'all 0.8s ease-out';
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
+                        element.style.transition = 'all 0.8s ease-out';
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
                     }, 400 + (index * 200));
                 });
             }
@@ -534,7 +645,7 @@
             }
 
             updateContentLayout() {
-                const wrapper = document.querySelector('.terms-container');
+                const wrapper = document.querySelector('.content-wrapper') || document.querySelector('.terms-container');
                 if (wrapper) {
                     wrapper.style.opacity = '0.99';
                     setTimeout(() => {
@@ -545,25 +656,57 @@
 
             restart() {
                 this.isIntroComplete = false;
+                this.termsLoaded = false;
                 this.mainContent.classList.remove('show');
                 this.mainContent.classList.add('hidden');
                 this.introScreen.style.display = 'flex';
                 this.introScreen.style.opacity = '1';
                 this.introScreen.style.transform = 'scale(1)';
+                this.introScreen.style.visibility = 'visible';
+                
+                this.introScreen.style.animation = 'none';
                 setTimeout(() => {
-                    this.startIntroSequence();
+                    this.introScreen.style.animation = 'completeIntro 7s ease-in-out forwards';
+                }, 10);
+                
+                setTimeout(() => {
+                    this.startDarknessSequence();
                 }, 100);
             }
         }
 
         function restartExperience() {
-            if (window.cinematicExperience) {
-                window.cinematicExperience.restart();
+            if (window.darknessExperience) {
+                window.darknessExperience.restart();
+            }
+        }
+
+        function loadHiContent() {
+            if (window.darknessExperience) {
+                window.darknessExperience.loadHiContent();
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            window.cinematicExperience = new CinematicExperience();
+            window.darknessExperience = new DarknessExperience();
+        });
+
+        function optimizeAnimations() {
+            document.documentElement.style.scrollBehavior = 'smooth';
+            const cards = document.querySelectorAll('.content-card, .terms-section');
+            cards.forEach(card => {
+                card.style.willChange = 'transform, opacity';
+            });
+        }
+        setTimeout(optimizeAnimations, 1000);
+        
+        window.addEventListener('error', (event) => {
+            console.error('Application error:', event.error);
+        });
+
+        window.addEventListener('unhandledrejection', (event) => {
+            console.error('Unhandled promise rejection:', event.reason);
+            event.preventDefault();
         });
     </script>
 </body>
